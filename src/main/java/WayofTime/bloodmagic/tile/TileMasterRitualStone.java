@@ -315,8 +315,10 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
 
         EnumReaderBoundaries modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
-        if (modificationType == EnumReaderBoundaries.SUCCESS)
+        if (modificationType == EnumReaderBoundaries.SUCCESS) {
             descriptor.modifyAreaByBlockPositions(offset1, offset2);
+            currentRitual.getBlockRange(range).modifyAreaByBlockPositions(offset1, offset2);
+        }
 
         return modificationType;
     }

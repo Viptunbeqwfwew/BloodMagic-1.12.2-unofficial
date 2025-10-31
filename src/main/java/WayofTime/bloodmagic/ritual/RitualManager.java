@@ -100,7 +100,9 @@ public class RitualManager {
     }
 
     public Ritual getRitual(String id) {
-        return rituals.get(id);
+        if (rituals.containsKey(id))
+            return rituals.get(id).getNewCopy();
+        return null;
     }
 
     public String getId(Ritual ritual) {
