@@ -2,10 +2,12 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.ritual.EnumRitualReaderState;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.Ritual;
+import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -167,9 +169,12 @@ public class ItemRitualReader extends Item implements IVariantProvider {
                                 }
                                 Ritual ritual = master.getCurrentRitual();
 
-                                int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, null, null);
-                                int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, null, null);
-                                int maxVolume = ritual.getMaxVolumeForRange(range, null, null);
+                                List<EnumDemonWillType> activeTypes = master.getActiveWillConfig();
+                                DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), masterPos);
+
+                                int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, activeTypes, holder);
+                                int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, activeTypes, holder);
+                                int maxVolume = ritual.getMaxVolumeForRange(range, activeTypes, holder);
 
                                 switch (master.setBlockRangeByBounds(player, range, containedPos, pos2)) {
                                     case SUCCESS:

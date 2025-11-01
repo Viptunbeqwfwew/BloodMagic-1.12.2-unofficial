@@ -121,7 +121,7 @@ public class RitualExpulsion extends Ritual {
         int k = MathHelper.floor(entityLiving.posZ);
         int l;
 
-        if (!entityLiving.getEntityWorld().isAirBlock(new BlockPos(i, j, k))) {
+        if (entityLiving.getEntityWorld().isAirBlock(new BlockPos(i, j, k))) {
             boolean flag1 = false;
 
             while (!flag1 && j > 0) {
