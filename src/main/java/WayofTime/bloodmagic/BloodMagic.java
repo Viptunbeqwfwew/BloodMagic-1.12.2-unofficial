@@ -33,9 +33,9 @@ import java.util.List;
 
 @Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.GuiBloodMagicConfig$Factory")
 public class BloodMagic {
-    public static final String MODID = "bloodmagic";
-    public static final String NAME = "Blood Magic: Alchemical Wizardry";
-    public static final String VERSION = "@VERSION@";
+    public static final String MODID = BloodMagicTag.MOD_ID;
+    public static final String NAME = BloodMagicTag.MOD_NAME;
+    public static final String VERSION = BloodMagicTag.VERSION;
     public static final String DEPEND = "required-after:guideapi;";
     public static final boolean IS_DEV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     public static final List<Pair<IBloodMagicPlugin, BloodMagicPlugin>> PLUGINS = Lists.newArrayList();
