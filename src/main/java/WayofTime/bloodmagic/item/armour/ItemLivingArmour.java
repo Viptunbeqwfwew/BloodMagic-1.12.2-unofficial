@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerRepairing;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeElytra;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.LivingArmorElytraProccessor;
 import WayofTime.bloodmagic.network.PlayerFallDistancePacketProcessor;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.util.Utils;
@@ -57,7 +58,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     public static String[] names = {"helmet", "chest", "legs", "boots"};
     //TODO: Save/delete cache periodically.
     public static Map<UUID, LivingArmour> armourMap = new HashMap<>();
-    private static Field _FLAGS = ReflectionHelper.findField(Entity.class, "FLAGS", "field_184240_ax");
+    private final static Field _FLAGS = ReflectionHelper.findField(Entity.class, "FLAGS", "field_184240_ax");
     private static DataParameter<Byte> FLAGS = null;
 
     public ItemLivingArmour(EntityEquipmentSlot armorType) {
@@ -298,7 +299,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                         LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgradeFromNBT(BloodMagic.MODID + ".upgrade.elytra", chestStack);
                         if (upgrade instanceof LivingArmourUpgradeElytra) {
-                            if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.capabilities.isFlying) {
+                            if (spPlayer.movementInput.jump && !spPlayer.onGround && spPlayer.motionY < 0.0D && !spPlayer.capabilities.isFlying && !spPlayer.isInWater()) {
                                 if (spPlayer.motionY > -0.5D) {
                                     BloodMagicPacketHandler.INSTANCE.sendToServer(new PlayerFallDistancePacketProcessor(1));
                                 }
@@ -306,10 +307,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                                 if (!spPlayer.isElytraFlying()) {
                                     byte b0 = player.getDataManager().get(FLAGS);
                                     player.getDataManager().set(FLAGS, (byte) (b0 | 1 << 7));
+                                    BloodMagicPacketHandler.INSTANCE.sendToServer(new LivingArmorElytraProccessor(true));
                                 }
-                            } else if (spPlayer.isElytraFlying() && !spPlayer.movementInput.jump && !spPlayer.onGround) {
+                            } else if (spPlayer.isElytraFlying() && (!spPlayer.movementInput.jump || spPlayer.isInWater())) {
                                 byte b0 = player.getDataManager().get(FLAGS);
                                 player.getDataManager().set(FLAGS, (byte) (b0 & ~(1 << 7)));
+                                BloodMagicPacketHandler.INSTANCE.sendToServer(new LivingArmorElytraProccessor(false));
                             }
                         }
                     }

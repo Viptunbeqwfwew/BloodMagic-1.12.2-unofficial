@@ -20,6 +20,7 @@ apply from: 'gradle/scripts/helpers.gradle'
 
 // Early Assertions
 assertProperty 'mod_version'
+assertProperty 'version_bugfix'
 assertProperty 'root_package'
 assertProperty 'mod_id'
 assertProperty 'mod_name'
@@ -41,7 +42,7 @@ setDefaultProperty 'extra_jvm_args', false, ''
 setDefaultProperty 'extra_tweak_classes', false, ''
 setDefaultProperty 'change_minecraft_sources', false, false
 
-version = propertyString('mod_version')
+version = propertyString('mod_version') + "-" + propertyString("version_bugfix")
 group = propertyString('root_package')
 
 base {
@@ -96,7 +97,7 @@ minecraft {
         if (file('tags.properties').exists()) {
             Properties props = new Properties().tap {  it.load(file('tags.properties').newInputStream()); it }
             if (!props.isEmpty()) {
-                injectedTags.set(props.collectEntries { k, v -> [(k): interpolate(v)] })
+                injectedTags.set(props.collectEntries { k, v -> [(k): propertyString(v)] })
             }
         }
     }
