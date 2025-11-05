@@ -233,6 +233,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             if (willLeft >= willRequired && canSustainArmour(type, willLeft)) {
                 this.setAbilitiesOfArmour(type, willLeft - willRequired, stack);
                 PlayerDemonWillHandler.consumeDemonWill(type, player, willRequired);
+                if (getDamage(stack) >= getMaxDamage(stack)) {
+                    this.revertArmour(player, stack);
+                }
             } else {
                 this.revertArmour(player, stack);
             }
