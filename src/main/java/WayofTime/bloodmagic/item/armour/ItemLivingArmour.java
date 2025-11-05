@@ -318,9 +318,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                     }
                 }
             }
-        }
-
-        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
+        } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
             if (!hasLivingArmour(stack)) {
                 setLivingArmour(stack, getLivingArmourFromStack(stack));
             }
