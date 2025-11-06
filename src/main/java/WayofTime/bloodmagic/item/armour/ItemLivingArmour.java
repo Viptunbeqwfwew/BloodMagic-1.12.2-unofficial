@@ -318,7 +318,9 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                     }
                 }
             }
-        } else if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
+        }
+
+        if (this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
             if (!hasLivingArmour(stack)) {
                 setLivingArmour(stack, getLivingArmourFromStack(stack));
             }
@@ -329,8 +331,15 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 armour.onTick(world, player);
             }
 
-            setLivingArmour(stack, armour, false);
+            if (!world.isRemote)
+                setLivingArmour(stack, armour, false);
         }
+    }
+
+    @Override
+    public void readNBTShareTag(ItemStack stack, @Nullable NBTTagCompound nbt) {
+        super.readNBTShareTag(stack, nbt);
+        setLivingArmour(stack, getLivingArmourFromStack(stack));
     }
 
     @Override
