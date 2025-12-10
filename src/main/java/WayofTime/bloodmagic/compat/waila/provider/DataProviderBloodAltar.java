@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHolding;
 import WayofTime.bloodmagic.util.Constants;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
-import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -11,6 +11,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -64,8 +65,8 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
                 break;
             }
             case SIGIL_HELD: {
-                hasSeer = holdingSeerSigil(player);
-                hasSigil = hasSeer || holdingDivinationSigil(player);
+                hasSeer = holdingSigil(player, RegistrarBloodMagicItems.SIGIL_SEER);
+                hasSigil = hasSeer || holdingSigil(player, RegistrarBloodMagicItems.SIGIL_DIVINATION);
                 break;
             }
             case SIGIL_CONTAINED: {
@@ -93,30 +94,32 @@ public class DataProviderBloodAltar implements IWailaDataProvider {
     }
 
     public static boolean hasStack(ItemStack stack, EntityPlayer player) {
+        ItemStack holdindSigil = new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING);
         for (ItemStack inventoryStack : player.inventory.mainInventory)
-            if (inventoryStack != null && inventoryStack.isItemEqual(stack))
-                return true;
+            if (inventoryStack != null)
+                if (inventoryStack.isItemEqual(stack))
+                    return true;
+                else if (inventoryStack.isItemEqual(holdindSigil)) {
+                    for (ItemStack sigil : ItemSigilHolding.getInternalInventory(inventoryStack))
+                        if (sigil.isItemEqual(stack))
+                            return true;
+                }
 
         return false;
     }
 
-    private static boolean holdingSeerSigil(EntityPlayer player) {
-        if (player.getHeldItemMainhand().getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
+    public static boolean holdingSigil(EntityPlayer player, Item sigil) {
+        if (player.getHeldItemMainhand().getItem() == sigil)
             return true;
 
-        if (player.getHeldItemOffhand().getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
+        if (player.getHeldItemOffhand().getItem() == sigil)
             return true;
 
-        return false;
-    }
-
-    private static boolean holdingDivinationSigil(EntityPlayer player) {
-        if (player.getHeldItemMainhand().getItem() instanceof ItemSigilDivination)
+        ItemStack itemStack = player.getHeldItemMainhand();
+        if (itemStack.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING && ItemSigilHolding.getInternalInventory(itemStack).get(ItemSigilHolding.getCurrentItemOrdinal(itemStack)).getItem() == sigil)
             return true;
 
-        if (!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() instanceof ItemSigilDivination)
-            return true;
-
-        return false;
+        itemStack = player.getHeldItemOffhand();
+        return itemStack.getItem() == RegistrarBloodMagicItems.SIGIL_HOLDING && ItemSigilHolding.getInternalInventory(itemStack).get(ItemSigilHolding.getCurrentItemOrdinal(itemStack)).getItem() == sigil;
     }
 }

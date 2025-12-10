@@ -876,6 +876,7 @@ waila.bloodmagic.array.reagent=試薬： %s
 waila.bloodmagic.array.catalyst=触媒： %s
 option.bloodmagic.bypassSneak=スニークで回避
 option.bloodmagic.bloodAltar=血の祭壇
+option.bloodmagic.incenseAltar=香の祭壇
 option.bloodmagic.ritualController=儀式石
 option.bloodmagic.teleposer=テレポーザー
 option.bloodmagic.array=錬金術魔法陣

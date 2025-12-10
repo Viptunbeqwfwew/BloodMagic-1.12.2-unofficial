@@ -938,6 +938,7 @@ waila.bloodmagic.array.reagent=Reagent: %s
 waila.bloodmagic.array.catalyst=Catalyst: %s
 option.bloodmagic.bypassSneak=Bypass Sneak
 option.bloodmagic.bloodAltar=Blood Altar
+option.bloodmagic.incenseAltar=Incense Altar
 option.bloodmagic.ritualController=Ritual Stones
 option.bloodmagic.teleposer=Teleposer
 option.bloodmagic.array=Alchemy Array

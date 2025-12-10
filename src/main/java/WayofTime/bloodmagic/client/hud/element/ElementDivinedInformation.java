@@ -23,7 +23,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
     public boolean shouldRender(Minecraft minecraft) {
         EntityPlayer player = Minecraft.getMinecraft().player;
         ItemStack sigilStack = player.getHeldItem(EnumHand.MAIN_HAND);
-        boolean flag = false;
+        boolean flag;
         if (simple) {
             if (sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION || sigilStack.getItem() == RegistrarBloodMagicItems.SIGIL_SEER)
                 flag = true;
@@ -55,8 +55,8 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
         if (sigilStack.getItem() instanceof ItemSigilHolding) {
             List<ItemStack> internalInv = ItemSigilHolding.getInternalInventory(sigilStack);
             int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilStack);
-            if (internalInv != null && !internalInv.get(currentSlot).isEmpty()) {
-                return (internalInv.get(currentSlot).getItem() == RegistrarBloodMagicItems.SIGIL_SEER && !simple) || (internalInv.get(currentSlot).getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION && simple);
+            if (!internalInv.get(currentSlot).isEmpty()) {
+                return (internalInv.get(currentSlot).getItem() == RegistrarBloodMagicItems.SIGIL_SEER) || (internalInv.get(currentSlot).getItem() == RegistrarBloodMagicItems.SIGIL_DIVINATION && simple);
             }
         }
         return false;

@@ -892,6 +892,7 @@ waila.bloodmagic.array.reagent=Reagenz: %s
 waila.bloodmagic.array.catalyst=Katalysator: %s
 option.bloodmagic.bypassSneak=Umgehe Schleichen
 option.bloodmagic.bloodAltar=Blutaltar
+option.bloodmagic.incenseAltar=Räucheraltar
 option.bloodmagic.ritualController=Ritualsteine
 option.bloodmagic.teleposer=Teleposer
 option.bloodmagic.array=Alchemische Anordnung

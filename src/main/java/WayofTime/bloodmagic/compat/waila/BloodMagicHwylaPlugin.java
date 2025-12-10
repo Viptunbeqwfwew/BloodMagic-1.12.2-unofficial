@@ -16,6 +16,9 @@ public class BloodMagicHwylaPlugin implements IWailaPlugin {
         registrar.registerBodyProvider(DataProviderBloodAltar.INSTANCE, TileAltar.class);
         registrar.registerNBTProvider(DataProviderBloodAltar.INSTANCE, TileAltar.class);
         registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_ALTAR, true);
+        registrar.registerBodyProvider(DataProviderIncenseAltar.INSTANCE, TileIncenseAltar.class);
+        registrar.registerNBTProvider(DataProviderIncenseAltar.INSTANCE, TileIncenseAltar.class);
+        registrar.addConfig(BloodMagic.MODID, Constants.Compat.WAILA_CONFIG_INCENSE_ALTAR, true);
 
         registrar.registerBodyProvider(DataProviderTeleposer.INSTANCE, TileTeleposer.class);
         registrar.registerNBTProvider(DataProviderTeleposer.INSTANCE, TileTeleposer.class);
