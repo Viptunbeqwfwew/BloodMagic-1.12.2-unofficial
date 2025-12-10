@@ -9,6 +9,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 public class ContainerHolding extends Container {
     public final InventoryHolding inventoryHolding;
     private final int PLAYER_INVENTORY_ROWS = 3;
@@ -26,7 +28,7 @@ public class ContainerHolding extends Container {
 
         for (int rowIndex = 0; rowIndex < PLAYER_INVENTORY_ROWS; ++rowIndex) {
             for (int columnIndex = 0; columnIndex < PLAYER_INVENTORY_COLUMNS; ++columnIndex) {
-                this.addSlotToContainer(new Slot(player.inventory, columnIndex + rowIndex * 9 + 9, 8 + columnIndex * 18, 41 + rowIndex * 18));
+                this.addSlotToContainer(new SlotAntiHeldIn(player.inventory, columnIndex + rowIndex * 9 + 9, 8 + columnIndex * 18, 41 + rowIndex * 18, currentSlotHeldIn));
             }
         }
 
@@ -34,16 +36,18 @@ public class ContainerHolding extends Container {
             if (actionBarIndex == currentSlotHeldIn) {
                 this.addSlotToContainer(new SlotDisabled(player.inventory, actionBarIndex, 8 + actionBarIndex * 18, 99));
             } else {
-                this.addSlotToContainer(new Slot(player.inventory, actionBarIndex, 8 + actionBarIndex * 18, 99));
+                this.addSlotToContainer(new SlotAntiHeldIn(player.inventory, actionBarIndex, 8 + actionBarIndex * 18, 99, currentSlotHeldIn));
             }
         }
     }
 
+    @ParametersAreNonnullByDefault
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
         return true;
     }
 
+    @ParametersAreNonnullByDefault
     @Override
     public void onContainerClosed(EntityPlayer entityPlayer) {
         super.onContainerClosed(entityPlayer);
@@ -62,6 +66,7 @@ public class ContainerHolding extends Container {
         }
     }
 
+    @ParametersAreNonnullByDefault
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
         ItemStack stack = ItemStack.EMPTY;
@@ -112,7 +117,7 @@ public class ContainerHolding extends Container {
 
     private class SlotHolding extends Slot {
         private final EntityPlayer player;
-        private ContainerHolding containerHolding;
+        private final ContainerHolding containerHolding;
 
         public SlotHolding(ContainerHolding containerHolding, IInventory inventory, EntityPlayer player, int slotIndex, int x, int y) {
             super(inventory, slotIndex, x, y);
@@ -135,16 +140,32 @@ public class ContainerHolding extends Container {
         }
     }
 
+    private class SlotAntiHeldIn extends Slot {
+        final private int currentSlotHeldIn;
+        public SlotAntiHeldIn(IInventory inventory, int slotIndex, int x, int y, int currentSlotHeldIn) {
+            super(inventory, slotIndex, x, y);
+            this.currentSlotHeldIn = currentSlotHeldIn;
+        }
+
+        @ParametersAreNonnullByDefault
+        @Override
+        public boolean isItemValid(ItemStack itemStack) {
+            return super.isItemValid(itemStack) && itemStack != inventory.getStackInSlot(currentSlotHeldIn);
+        }
+    }
+
     private class SlotDisabled extends Slot {
         public SlotDisabled(IInventory inventory, int slotIndex, int x, int y) {
             super(inventory, slotIndex, x, y);
         }
 
+        @ParametersAreNonnullByDefault
         @Override
         public boolean isItemValid(ItemStack itemStack) {
             return false;
         }
 
+        @ParametersAreNonnullByDefault
         @Override
         public boolean canTakeStack(EntityPlayer player) {
             return false;

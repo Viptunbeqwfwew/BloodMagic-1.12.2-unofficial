@@ -391,6 +391,7 @@ waila.bloodmagic.array.reagent=Reagent: %s
 waila.bloodmagic.array.catalyst=Catalyst: %s
 option.bloodmagic.bypassSneak=Bypass Sneak
 option.bloodmagic.bloodAltar=血祭壇
+option.bloodmagic.incenseAltar=香壇
 option.bloodmagic.ritualController=儀式石
 option.bloodmagic.teleposer=轉送器
 option.bloodmagic.array=煉金矩陣

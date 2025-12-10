@@ -154,6 +154,7 @@ public class Constants {
         public static final String JEI_CATEGORY_ARMOURDOWNGRADE = BloodMagic.MODID + ":armourDowngrade";
 
         public static final String WAILA_CONFIG_ALTAR = BloodMagic.MODID + ".bloodAltar";
+        public static final String WAILA_CONFIG_INCENSE_ALTAR = BloodMagic.MODID + ".incenseAltar";
         public static final String WAILA_CONFIG_TELEPOSER = BloodMagic.MODID + ".teleposer";
         public static final String WAILA_CONFIG_RITUAL = BloodMagic.MODID + ".ritualController";
         public static final String WAILA_CONFIG_ARRAY = BloodMagic.MODID + ".array";

@@ -555,6 +555,7 @@ waila.bloodmagic.array.reagent=Реагент: %s
 waila.bloodmagic.array.catalyst=Катализатор: %s
 option.bloodmagic.bypassSneak=Полная информация без Shift
 option.bloodmagic.bloodAltar=Кровавый алтарь
+option.bloodmagic.incenseAltar=Жертвенник для курений
 option.bloodmagic.bloodTank=Резервуар крови
 option.bloodmagic.ritualController=Ритуальные камни
 option.bloodmagic.teleposer=Телепозер
