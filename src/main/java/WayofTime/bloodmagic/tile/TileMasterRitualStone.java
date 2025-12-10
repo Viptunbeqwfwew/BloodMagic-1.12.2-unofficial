@@ -88,6 +88,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
         redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
+        inverted = tag.getBoolean(Constants.NBT.IS_INVERTED);
 
         for (EnumDemonWillType type : EnumDemonWillType.values()) {
             if (tag.getBoolean("EnumWill" + type)) {
@@ -111,6 +112,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
         tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
+        tag.setBoolean(Constants.NBT.IS_INVERTED, inverted);
 
         for (EnumDemonWillType type : currentActiveWillConfig) {
             tag.setBoolean("EnumWill" + type, true);
